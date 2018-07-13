@@ -1,6 +1,6 @@
 {
-    "name": "sigcb/client",
-    "description": "A PHP-SDK for e-Cobrança API",
+    "name": "timestreamframework/e-cobranca",
+    "description": "Webservice SOAP/XML para cobrança registrada da Caixa Econômica Federal (SIGCB - Sistema de gestao de cobranca bancaria)",
     "keywords": ["caixa econômica", "SOAP", "Webservice"],
     "type": "package",
     "require": {
@@ -17,6 +17,5 @@
         }
     },
     "version": "1.0.1",
-    "minimum-stability": "dev",
-    "prefer-stable": true
+    "minimum-stability": "dev"
 }
