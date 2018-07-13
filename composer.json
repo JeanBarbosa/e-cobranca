@@ -1,0 +1,21 @@
+{
+    "name": "SIGCB/client",
+    "description": "A PHP-SDK for e-Cobrança API",
+    "keywords": ["caixa econômica", "SOAP", "Webservice"],
+    "type": "package",
+    "require": {
+        "zendframework/zend-soap": "^2.7"
+    },
+    "license": "MIT",
+    "authors": [{
+        "name": "Jean Barbosa",
+        "email": "programmer.jean@gmail.com"
+    }],
+    "autoload": {
+        "psr-4": {
+            "SIGCB\\": "SIGCB/"
+        }
+    },
+    "version": "1.0.0",
+    "minimum-stability": "dev"
+}
