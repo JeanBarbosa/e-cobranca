@@ -111,7 +111,6 @@ class BoletoCaixa {
     {
         $ws = new \SIGCB\Client\CaixaProvider();
 
-        var_dump($ws); die;
     }
 
     public function incluirBoleto()

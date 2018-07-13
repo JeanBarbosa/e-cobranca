@@ -5,5 +5,6 @@ require_once 'vendor/autoload.php';
 
 use SIGCB\BoletoCaixa;
 
-$ws = new \SIGCB\BoletoCaixa();
+$boleto = new \SIGCB\BoletoCaixa();
 
+var_dump($boleto->consultarBoleto());

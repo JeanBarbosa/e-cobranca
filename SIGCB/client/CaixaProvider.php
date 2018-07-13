@@ -69,4 +69,32 @@ class CaixaProvider {
         $this->identificadorOrigem = '127.0.0.1'; //$_SERVER['REMOTE_ADDR'];
     }
 
+    /**
+     * Cálculo do Hash de autenticação segundo o manual.
+     * CÓDIGO DO BENEFICIÁRIO (7 POSIÇÕES) + NOSSO NÚMERO (17 POSIÇÕES) + DATA DE VENCIMENTO (DDMMAAAA) + VALOR (15 POSIÇÕES) + CPF OU CNPJ DO BENEFICIÁRIO (14 POSIÇÕES)
+     *
+     * @param $codigoBeneficiario   Código fornecido pela CAIXA, através da agência de relacionamento do cliente. Deve ser preenchido com o código do Beneficiário, até 7 posições, da esquerda para direita.
+     * @param $docRegistro          CPF ou CNPJ
+     * @param $nossoNumero          Nosso Número – Se informado zeros, o nosso número será gerado pelo banco. Caso contrário deverá ser informado número iniciando com 14. Exemplo: 14000000000000001.
+     * @param $dataVencimento       Data de vencimento do título de cobrança no formato YYYY-MM-DD. //CONSULTA_BOLETO e BAIXA_BOLETO. Para Data de Vencimento e Valor, informar zeros.
+     * @param $valor                Valor original do Título. Valor expresso em moeda corrente, utilizar 2 casas decimais. Exemplo: 0000000000000.00
+     * @return string               retorna o hash dos dados fornecidos
+     */
+    public function hashAutenticacao($codigoBeneficiario, $docRegistro, $nossoNumero = 0, $dataVencimento = '', $valor = '')
+    {
+        // TODO validar parametros recebidos (format date e cpf or cpnj)
+        $raw = preg_replace('/[^A-Za-z0-9]/', '',
+            '0' . $codigoBeneficiario .
+            $nossoNumero .
+            ((!$dataVencimento) ?
+                sprintf('%08d', 0) :
+                strftime('%d%m%Y', strtotime($dataVencimento))) .
+            sprintf('%015d', preg_replace('/[^0-9]/', '', $valor)) .
+            sprintf('%014d', $docRegistro));
+
+        $this->autenticacao = base64_encode(hash('sha256', $raw, true));
+
+        return $this->autenticacao;
+    }
+
 }
