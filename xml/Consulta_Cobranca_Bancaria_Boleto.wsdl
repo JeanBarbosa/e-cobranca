@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?><!--File Consulta_Cobranca_Bancaria_Boleto.wsdl, application BAR_CONSULTA_COBRANCA_BANCARIA--><wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" name="Consulta_Cobranca_Bancaria_Boleto" targetNamespace="http://caixa.gov.br/sibar/consulta_cobranca_bancaria/boleto" xmlns:consultacobrancabancaria="http://caixa.gov.br/sibar/consulta_cobranca_bancaria/boleto" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <wsdl:documentation>
+    <wsdl:appinfo source="WMQI_APPINFO">
+      <MRWSDLAppInfo imported="true">
+        <generatedXSD location="Consulta_Cobranca_Bancaria_Boleto_InlineSchema1.xsd"/>
+        <binding hasEncoding="false" imported="true" name="Consulta_Cobranca_Bancaria_BoletoSOAP" originalBindingStyle="document"/>
+      </MRWSDLAppInfo>
+    </wsdl:appinfo>
+  </wsdl:documentation>
+  <wsdl:types>
+    
+            <xsd:schema targetNamespace="http://caixa.gov.br/sibar/consulta_cobranca_bancaria/boleto">
+
+    </xsd:schema>
+        <xsd:schema>
+<xsd:import namespace="http://caixa.gov.br/sibar/consulta_cobranca_bancaria/boleto" schemaLocation="https://des.barramento.caixa.gov.br/sibar/ConsultaCobrancaBancaria/Boleto?xsd=xsd0">
+    	</xsd:import>
+    </xsd:schema>
+    </wsdl:types>
+  <wsdl:message name="CONSULTA_BOLETORequest">
+    <wsdl:part element="consultacobrancabancaria:SERVICO_ENTRADA" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="CONSULTA_BOLETOResponse">
+    <wsdl:part element="consultacobrancabancaria:SERVICO_SAIDA" name="parameters"/>
+  </wsdl:message>
+  <wsdl:portType name="Consulta_Cobranca_Bancaria_Boleto">
+    <wsdl:operation name="CONSULTA_BOLETO">
+      <wsdl:input message="consultacobrancabancaria:CONSULTA_BOLETORequest"/>
+      <wsdl:output message="consultacobrancabancaria:CONSULTA_BOLETOResponse"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="Consulta_Cobranca_Bancaria_BoletoSOAP" type="consultacobrancabancaria:Consulta_Cobranca_Bancaria_Boleto">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="CONSULTA_BOLETO">
+      <soap:operation soapAction="http://caixa.gov.br/sibar/consulta_cobranca_bancaria/boleto/NewOperation"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="Consulta_Cobranca_Bancaria_Boleto">
+    <wsdl:port binding="consultacobrancabancaria:Consulta_Cobranca_Bancaria_BoletoSOAP" name="Consulta_Cobranca_Bancaria_BoletoSOAP">
+      <soap:address location="https://des.barramento.caixa.gov.br/sibar/ConsultaCobrancaBancaria/Boleto"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

@@ -1,11 +1,11 @@
 <?php
 
-namespace SIGCB;
+namespace Caixa;
 
-use SIGCB\Client\CaixaProvider;
+use Caixa\Client\CaixaProvider;
 
-class BoletoCaixa {
-
+class BoletoCaixa
+{
     protected $banco = 'caixa';
 
     /**
@@ -37,7 +37,7 @@ class BoletoCaixa {
     protected $dataVencimento;
     protected $valor;
     protected $tipoEspecie = '99';
-    protected $flagAceite;
+    protected $flagAceite = 'S';
     protected $dataEmissao;
 
     //Juros Moura
@@ -109,24 +109,25 @@ class BoletoCaixa {
 
     public function consultarBoleto()
     {
-        $ws = new \SIGCB\Client\CaixaProvider();
+        $caixa = new CaixaProvider();
+        $caixa->consulta($this);
 
     }
 
     public function incluirBoleto()
     {
-
-
+        $caixa = new CaixaProvider();
+        $caixa->incluir($this);
     }
 
     public function alterarBoleto()
     {
-
+        //TODO alterar boleto
     }
 
     public function baixaBoleto()
     {
-
+        //TODO baixa boleto
     }
 
     /**

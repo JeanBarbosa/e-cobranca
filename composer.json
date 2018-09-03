@@ -1,5 +1,5 @@
 {
-    "name": "timestreamframework/e-cobranca",
+    "name": "toolstore/e-cobranca",
     "description": "Webservice SOAP/XML para cobrança registrada da Caixa Econômica Federal (SIGCB - Sistema de gestao de cobranca bancaria)",
     "keywords": ["caixa econômica", "SOAP", "Webservice"],
     "type": "package",
@@ -13,7 +13,7 @@
     }],
     "autoload": {
         "psr-4": {
-            "SIGCB\\": "SIGCB/"
+            "Caixa\\": "src/"
         }
     },
     "version": "1.0.1",
