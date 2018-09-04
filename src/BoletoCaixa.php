@@ -262,7 +262,7 @@ class BoletoCaixa
      */
     public function setCodigoBeneficiario($codigoBeneficiario)
     {
-        $this->codigoBeneficiario = $codigoBeneficiario;
+        $this->codigoBeneficiario = preg_replace('/\D/', '', $codigoBeneficiario);
     }
 
     /**
@@ -539,7 +539,7 @@ class BoletoCaixa
      */
     public function setCpf($cpf)
     {
-        $this->cpf = $cpf;
+        $this->cpf = preg_replace('/\D/', '', $cpf);
     }
 
     /**
@@ -571,7 +571,8 @@ class BoletoCaixa
      */
     public function setCnpj($cnpj)
     {
-        $this->cnpj = $cnpj;
+        $this->cnpj = preg_replace('/\D/', '', $cnpj);
+        var_dump($this->cnpj); die;
     }
 
     /**
@@ -667,7 +668,7 @@ class BoletoCaixa
      */
     public function setCep($cep)
     {
-        $this->cep = $cep;
+        $this->cep = preg_replace('/\D/', '', $cep);
     }
 
     /**
