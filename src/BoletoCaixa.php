@@ -32,7 +32,14 @@ class BoletoCaixa
     protected $indice;
 
     //Titulo
-    protected $nossoNumero = 0;
+
+    /**
+     * Código utilizado pelo banco para controle da carteira de cobrança.
+     * Quando informado pelo cliente (iniciado em 14), é retornado na resposta da CAIXA com valor ‘0’.
+     * @var string
+     */
+    protected $nossoNumero;
+
     protected $numeroDocumento;
     protected $dataVencimento;
     protected $valor;
@@ -100,18 +107,17 @@ class BoletoCaixa
     protected $percentualMinimo;
     protected $percentualMaximo;
 
-
+    //Dados de retorno em caso de sucesso (operacao incluir boleto)
     protected $codigoDeBarras;
     protected $linhaDigitavel;
     protected $ulrBoleto;
 
-    protected $errors;
+    protected $errors = [];
 
     public function consultarBoleto()
     {
         $caixa = new CaixaProvider();
         $caixa->consulta($this);
-
     }
 
     public function incluirBoleto()
@@ -268,11 +274,32 @@ class BoletoCaixa
     }
 
     /**
+     * Caso o BENEFICIÁRIO venha a controlar a geração do Nosso Número, deverá informá-lo no campo em questão,
+     * iniciando com ‘14’; Caso contrário, se a CAIXA for gerá-lo, preencher o campo com zero (17 posicoes).
      * @param mixed $nossoNumero
      */
     public function setNossoNumero($nossoNumero)
     {
-        $this->nossoNumero = $nossoNumero;
+        // Se informado zeros, o nosso número será gerado pelo banco.
+        // Caso contrário deverá ser informado número iniciando com 14. Exemplo: 14000000000000001.
+        if (empty($nossoNumero) || (int)$nossoNumero == 0) {
+
+            //Necessário para gerar o hash corretamente
+            $this->nossoNumero = '00000000000000000';
+
+        } elseif (strlen($nossoNumero) <> 17) {
+
+            $this->setErrors('Cod: 0002 - NOSSO NUMERO INVALIDO - 17 POSICOES');
+
+        } elseif (strpos($nossoNumero, '14') === false) {
+
+            $this->setErrors('Cod: 0002 - NOSSO NUMERO INVALIDO - INICIAR COM DIGITO 14');
+
+        } else {
+
+            $this->nossoNumero = $nossoNumero;
+        }
+
     }
 
     /**
@@ -962,5 +989,26 @@ class BoletoCaixa
     {
         $this->percentualMaximo = $percentualMaximo;
     }
+
+    /**
+     * @return array
+     */
+    public function getErrors()
+    {
+        return $this->errors;
+    }
+
+    /**
+     * @return array
+     */
+    public function setErrors($error)
+    {
+        $this->errors[] = $error;
+
+        if (!empty($this->errors)) {
+            throw new \RuntimeException($error);
+        }
+    }
+
 
 }

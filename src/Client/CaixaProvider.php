@@ -79,6 +79,7 @@ class CaixaProvider
      */
     public function generatorHash($codBeneficiario, $docRegistro, $nossoNumero = 0, $dataVencimento = '', $valor = '')
     {
+
         // TODO validar parametros recebidos (format date e cpf or cpnj)
         $raw = preg_replace('/[^A-Za-z0-9]/', '',
             '0' . $codBeneficiario .
@@ -215,7 +216,7 @@ class CaixaProvider
             'soapenv:Body' => array(
                 'manutencaocobrancabancaria:SERVICO_ENTRADA' => array(
                     'sibar_base:HEADER' => array(
-                        'VERSAO' => '1.0',
+                        'VERSAO' => $this->versao,
                         'AUTENTICACAO' => $hashAutenticacao,
                         'USUARIO_SERVICO' => $this->usuarioServico, //SGCBS02P - Produção | SGCBS01D - Desenvolvimento
                         'OPERACAO' => 'INCLUI_BOLETO',
