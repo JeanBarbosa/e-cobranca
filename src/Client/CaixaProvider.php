@@ -3,6 +3,7 @@
 namespace Caixa\Client;
 
 use Caixa\BoletoCaixa;
+use Caixa\Helpers\XMLParser;
 use Caixa\Helpers\XmlDomConstruct;
 
 class CaixaProvider
@@ -268,7 +269,9 @@ class CaixaProvider
             )
         );
 
-        return $this->sendRequest($arrayDados, 'INCLUI_BOLETO');
+        $response = $this->sendRequest($arrayDados, 'INCLUI_BOLETO');
+
+        return XMLParser::fromArray($response);
     }
 
 

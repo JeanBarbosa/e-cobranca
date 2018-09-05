@@ -412,7 +412,6 @@ class BoletoCaixa
      * SOMENTE_VALOR_MINIMO 1
      * Permite VALOR MAXIMO / PERCENTUAL MAXIMO = 0.00
      * Permite VALOR MINIMO / PERCENTUAL MINIMO = a partir de 0.01 Informar VALOR NOMINAL DO TITULO = maior que 0.00
-
      * NAO_ACEITA_VALOR_DIVERGENTE 2
      * Informar VALOR MAXIMO / VALOR MINIMO ou PERCENTUAL MAXIMO / PERCENTUAL MINIMO = 0.00
      * Permite somente QUANTIDADE_PERMITIDA = 1
@@ -489,14 +488,24 @@ class BoletoCaixa
 
     public function consultarBoleto()
     {
-        $caixa = new CaixaProvider();
-        $caixa->consulta($this);
+        //TODO consulta boleto
     }
 
     public function incluirBoleto()
     {
         $caixa = new CaixaProvider();
         $respose = $caixa->incluir($this);
+
+        if (isset($respose['COD_RETORNO'])) {
+            if($respose['COD_RETORNO'] == 'X5')
+            {
+                $this->errors[] = [
+                    'operation' => $respose['OPERACAO'],
+                    'message' =>  $respose['MSG_RETORNO'],
+                    'exception' => $respose['EXCECAO'],
+                ];
+            }
+        }
 
         return $respose;
     }
