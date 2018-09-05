@@ -173,13 +173,13 @@ class BoletoCaixa
      *
      * @var float
      */
-    protected $jurosValor;
+    protected $jurosValor = 0;
 
     /**
      * porcentagem sobre o valor do título a ser cobrado de juros de mora.
      * @var float
      */
-    protected $percentual;
+    protected $percentual = 0;
 
     /**
      * Valor do Abatimento
