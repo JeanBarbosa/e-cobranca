@@ -123,7 +123,9 @@ class BoletoCaixa
     public function incluirBoleto()
     {
         $caixa = new CaixaProvider();
-        $caixa->incluir($this);
+        $respose = $caixa->incluir($this);
+
+        return $respose;
     }
 
     public function alterarBoleto()
@@ -347,7 +349,8 @@ class BoletoCaixa
      */
     public function setValor($valor)
     {
-        $this->valor = $valor;
+        $this->valor = number_format((float)$valor, 2, '.', '');
+        var_dump($this->valor); die;
     }
 
     /**
@@ -572,7 +575,6 @@ class BoletoCaixa
     public function setCnpj($cnpj)
     {
         $this->cnpj = preg_replace('/\D/', '', $cnpj);
-        var_dump($this->cnpj); die;
     }
 
     /**

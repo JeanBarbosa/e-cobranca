@@ -243,10 +243,10 @@ class CaixaProvider
                                     //'DATA' => $informacoes['dataJuros'],
                                     'PERCENTUAL' => $boleto->getJurosValor(),
                                 ),
-                                'VALOR_ABATIMENTO' => '0',
+                                'VALOR_ABATIMENTO' => $boleto->getValorAbatimento(),
                                 'POS_VENCIMENTO' => array(
                                     'ACAO' => $boleto->getAcao(),
-                                    'NUMERO_DIAS' => '90',
+                                    'NUMERO_DIAS' => $boleto->getNumeroDias(),
                                 ),
                                 'CODIGO_MOEDA' => $boleto->getCodigoMoeda(),
                                 //Real
@@ -268,12 +268,7 @@ class CaixaProvider
             )
         );
 
-        $res = $this->sendRequest($arrayDados, 'INCLUI_BOLETO');
-
-
-        print_r($res);
-        die;
-
+        return $this->sendRequest($arrayDados, 'INCLUI_BOLETO');
     }
 
 
