@@ -723,7 +723,6 @@ class BoletoCaixa
     public function setValor($valor)
     {
         $this->valor = number_format((float)$valor, 2, '.', '');
-        var_dump($this->valor); die;
     }
 
     /**
