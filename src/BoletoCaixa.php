@@ -484,6 +484,7 @@ class BoletoCaixa
      */
     protected $ulrBoleto;
 
+    protected $debug = false;
     protected $errors = [];
 
     public function consultarBoleto()
@@ -497,11 +498,10 @@ class BoletoCaixa
         $respose = $caixa->incluir($this);
 
         if (isset($respose['COD_RETORNO'])) {
-            if($respose['COD_RETORNO'] == 'X5')
-            {
+            if ($respose['COD_RETORNO'] == 'X5') {
                 $this->errors[] = [
                     'operation' => $respose['OPERACAO'],
-                    'message' =>  $respose['MSG_RETORNO'],
+                    'message' => $respose['MSG_RETORNO'],
                     'exception' => $respose['EXCECAO'],
                 ];
             }
@@ -1404,6 +1404,16 @@ class BoletoCaixa
     public function getUlrBoleto()
     {
         return $this->ulrBoleto;
+    }
+
+    public function setDebug($bool = false)
+    {
+        $this->debug = is_bool($bool) ? $bool : false;
+    }
+
+    public function isDebug()
+    {
+        return $this->debug;
     }
 
     /**
