@@ -220,7 +220,7 @@ class CaixaProvider
                         'VERSAO' => $this->versao,
                         'AUTENTICACAO' => $hashAutenticacao,
                         //SGCBS02P - Produção | SGCBS01D - Desenvolvimento
-                        'USUARIO_SERVICO' => $boleto->isDebug() ? 'SGCBS01D': $this->usuarioServico,
+                        'USUARIO_SERVICO' => $boleto->isDebug() ? 'SGCBS01D' : $this->usuarioServico,
                         'OPERACAO' => 'INCLUI_BOLETO',
                         'SISTEMA_ORIGEM' => $this->sistemaOrigem,
                         'UNIDADE' => $boleto->getUnidade(),
@@ -262,6 +262,11 @@ class CaixaProvider
                                         'UF' => $boleto->getUf(),
                                         'CEP' => $boleto->getCep()
                                     ),
+                                ),
+                                'FICHA_COMPENSACAO' => array(
+                                    'MENSAGENS' => array(
+                                        'MENSAGEM' => implode(',', $boleto->getMensagemFichaCompesacao()),
+                                    )
                                 )
                             )
                         )

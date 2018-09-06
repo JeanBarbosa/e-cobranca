@@ -1259,7 +1259,9 @@ class BoletoCaixa
      */
     public function setMensagemFichaCompesacao($mensagemFichaCompesacao)
     {
-        $this->mensagemFichaCompesacao = $mensagemFichaCompesacao;
+        if(count($this->mensagemFichaCompesacao) <= 2){
+            $this->mensagemFichaCompesacao[] = substr(utf8_encode($mensagemFichaCompesacao), 0, 40);
+        }
     }
 
     /**
