@@ -939,7 +939,7 @@ class BoletoCaixa
      */
     public function setNome($nome)
     {
-        $this->nome = $nome;
+        $this->nome = $this->cleanString(substr($nome, 0, 40));
     }
 
     /**
@@ -987,7 +987,7 @@ class BoletoCaixa
      */
     public function setLogradouro($logradouro)
     {
-        $this->logradouro = $logradouro;
+        $this->logradouro = $this->cleanString(substr($logradouro, 0, 40));
     }
 
     /**
@@ -1003,7 +1003,7 @@ class BoletoCaixa
      */
     public function setBairro($bairro)
     {
-        $this->bairro = $bairro;
+        $this->bairro = $this->cleanString(substr($bairro, 0, 15));
     }
 
     /**
@@ -1019,7 +1019,7 @@ class BoletoCaixa
      */
     public function setCidade($cidade)
     {
-        $this->cidade = $cidade;
+        $this->cidade = $this->cleanString(substr($cidade, 0, 15));
     }
 
     /**
@@ -1035,7 +1035,7 @@ class BoletoCaixa
      */
     public function setUf($uf)
     {
-        $this->uf = $uf;
+        $this->uf = $this->cleanString(substr($uf, 0, 2));
     }
 
     /**
@@ -1259,7 +1259,7 @@ class BoletoCaixa
      */
     public function setMensagemFichaCompesacao($mensagemFichaCompesacao)
     {
-        if(count($this->mensagemFichaCompesacao) <= 2){
+        if (count($this->mensagemFichaCompesacao) <= 2) {
             $this->mensagemFichaCompesacao[] = substr(utf8_encode($mensagemFichaCompesacao), 0, 40);
         }
     }
@@ -1277,7 +1277,9 @@ class BoletoCaixa
      */
     public function setMensagamReciboPagador($mensagamReciboPagador)
     {
-        $this->mensagamReciboPagador = $mensagamReciboPagador;
+        if (count($this->mensagamReciboPagador) <= 4) {
+            $this->mensagamReciboPagador[] = $this->cleanString(substr($mensagamReciboPagador, 0, 40));
+        }
     }
 
     /**
@@ -1438,5 +1440,22 @@ class BoletoCaixa
         }
     }
 
+    /**
+     * Formata string de acordo com o requerido pelo webservice
+     *
+     * @see https://stackoverflow.com/a/3373364/513401
+     */
+    public function cleanString($str)
+    {
+        $replaces = array(
+            'S' => 'S', 's' => 's', 'Z' => 'Z', 'z' => 'z', 'À' => 'A', 'Á' => 'A', 'Â' => 'A', 'Ã' => 'A', 'Ä' => 'A', 'Å' => 'A', 'Æ' => 'A', 'Ç' => 'C', 'È' => 'E', 'É' => 'E',
+            'Ê' => 'E', 'Ë' => 'E', 'Ì' => 'I', 'Í' => 'I', 'Î' => 'I', 'Ï' => 'I', 'Ñ' => 'N', 'Ò' => 'O', 'Ó' => 'O', 'Ô' => 'O', 'Õ' => 'O', 'Ö' => 'O', 'Ø' => 'O', 'Ù' => 'U',
+            'Ú' => 'U', 'Û' => 'U', 'Ü' => 'U', 'Ý' => 'Y', 'Þ' => 'B', 'ß' => 'Ss', 'à' => 'a', 'á' => 'a', 'â' => 'a', 'ã' => 'a', 'ä' => 'a', 'å' => 'a', 'æ' => 'a', 'ç' => 'c',
+            'è' => 'e', 'é' => 'e', 'ê' => 'e', 'ë' => 'e', 'ì' => 'i', 'í' => 'i', 'î' => 'i', 'ï' => 'i', 'ð' => 'o', 'ñ' => 'n', 'ò' => 'o', 'ó' => 'o', 'ô' => 'o', 'õ' => 'o',
+            'ö' => 'o', 'ø' => 'o', 'ù' => 'u', 'ú' => 'u', 'û' => 'u', 'ý' => 'y', 'þ' => 'b', 'ÿ' => 'y'
+        );
+
+        return preg_replace('/[^0-9A-Za-z;,.\- ]/', '', strtoupper(strtr(trim($str), $replaces)));
+    }
 
 }
