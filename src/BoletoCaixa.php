@@ -489,7 +489,20 @@ class BoletoCaixa
 
     public function consultarBoleto()
     {
-        //TODO consulta boleto
+        $caixa = new CaixaProvider();
+        $response = $caixa->consulta($this);
+
+        if (isset($response['COD_RETORNO'])) {
+            if ($response['COD_RETORNO'] == 'X5') {
+                $this->errors[] = [
+                    'operation' => $response['OPERACAO'],
+                    'message' => $response['MSG_RETORNO'],
+                    'exception' => $response['EXCECAO'],
+                ];
+            }
+        }
+
+        return $response;
     }
 
     public function incluirBoleto()

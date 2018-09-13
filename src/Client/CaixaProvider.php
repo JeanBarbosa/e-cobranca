@@ -11,7 +11,8 @@ class CaixaProvider
 
     private $client;
 
-    protected $pathWsdlConsulta = 'https://barramento.caixa.gov.br/sibar/ManutencaoCobrancaBancaria/Boleto/Externo';
+    protected $pathWsdlManutencao = 'https://barramento.caixa.gov.br/sibar/ManutencaoCobrancaBancaria/Boleto/Externo';
+    protected $pathWsdlConsulta = 'https://barramento.caixa.gov.br/sibar/ConsultaCobrancaBancaria/Boleto';
 
     /**
      * Versão do SIGCB - Sistema de Gestão da Cobrança Bancária
@@ -99,10 +100,11 @@ class CaixaProvider
     public function sendRequest($options, $type)
     {
         $options = $this->parseXml($options, $type);
+        $path = $type == 'CONSULTA_BOLETO' ? $this->pathWsdlConsulta: $this->pathWsdlManutencao;
 
         try {
 
-            $connCURL = curl_init($this->pathWsdlConsulta);
+            $connCURL = curl_init($path);
             curl_setopt($connCURL, CURLOPT_POSTFIELDS, $options);
             curl_setopt($connCURL, CURLOPT_POST, true);
             curl_setopt($connCURL, CURLOPT_RETURNTRANSFER, true);
@@ -167,8 +169,6 @@ class CaixaProvider
 
     public function consulta(BoletoCaixa $boleto)
     {
-        //TODO validar inicio do numero 14 (documentacao)
-        // Para consultas, DATA_VENCIMENTO e VALOR devem ser preenchidos com zeros
         $hashAutenticacao = $this->generatorHash(
             $boleto->getCodigoBeneficiario(),
             $boleto->getCnpj(),
