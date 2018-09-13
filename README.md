@@ -35,7 +35,7 @@ o sistema [e-Cobrança](doc/ecobranca-consulta-titulos.png) da Caixa.
 Acesse ""Banco de títulos > Consulta de títulos", deixe o formulário em
 branco e clique em "Consultar" para exibir todos os títulos.
 
-![Consulta de títulos no e-Cobrança](doc/ecobranca-consulta-titulos.png)
+![Consulta de títulos no e-Cobrança](docs/ecobranca-consulta-titulos.png)
 
 ## Inclusão de títulos
 
