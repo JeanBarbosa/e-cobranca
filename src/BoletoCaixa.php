@@ -495,19 +495,19 @@ class BoletoCaixa
     public function incluirBoleto()
     {
         $caixa = new CaixaProvider();
-        $respose = $caixa->incluir($this);
+        $response = $caixa->incluir($this);
 
-        if (isset($respose['COD_RETORNO'])) {
-            if ($respose['COD_RETORNO'] == 'X5') {
+        if (isset($response['COD_RETORNO'])) {
+            if ($response['COD_RETORNO'] == 'X5') {
                 $this->errors[] = [
-                    'operation' => $respose['OPERACAO'],
-                    'message' => $respose['MSG_RETORNO'],
-                    'exception' => $respose['EXCECAO'],
+                    'operation' => $response['OPERACAO'],
+                    'message' => $response['MSG_RETORNO'],
+                    'exception' => $response['EXCECAO'],
                 ];
             }
         }
 
-        return $respose;
+        return $response;
     }
 
     public function alterarBoleto()
@@ -517,7 +517,20 @@ class BoletoCaixa
 
     public function baixaBoleto()
     {
-        //TODO baixa boleto
+        $caixa = new CaixaProvider();
+        $response = $caixa->baixa($this);
+
+        if (isset($response['COD_RETORNO'])) {
+            if ($response['COD_RETORNO'] == 'X5') {
+                $this->errors[] = [
+                    'operation' => $response['OPERACAO'],
+                    'message' => $response['MSG_RETORNO'],
+                    'exception' => $response['EXCECAO'],
+                ];
+            }
+        }
+
+        return $response;
     }
 
     /**
@@ -671,13 +684,9 @@ class BoletoCaixa
             //Necessário para gerar o hash corretamente
             $this->nossoNumero = '00000000000000000';
 
-        } elseif (strlen($nossoNumero) <> 17) {
+        } elseif ((strpos($nossoNumero, '14') === false) && (strlen($nossoNumero) <> 17)) {
 
-            $this->setErrors('Cod: 0002 - NOSSO NUMERO INVALIDO - 17 POSICOES');
-
-        } elseif (strpos($nossoNumero, '14') === false) {
-
-            $this->setErrors('Cod: 0002 - NOSSO NUMERO INVALIDO - INICIAR COM DIGITO 14');
+            $this->nossoNumero = '14' . $this->zeroFill($nossoNumero, '15');
 
         } else {
 
@@ -1456,6 +1465,25 @@ class BoletoCaixa
         );
 
         return preg_replace('/[^0-9A-Za-z;,.\- ]/', '', strtoupper(strtr(trim($str), $replaces)));
+    }
+
+
+    /**
+     * Helper para Zerofill (0 à esqueda).
+     * O valor não deve ter mais caracteres do que o número de dígitos especificados
+     *
+     * @param int $valor
+     * @param int $digitos
+     * @return string
+     * @throws Exception
+     */
+    public function zeroFill($valor, $digitos)
+    {
+        if (strlen($valor) > $digitos) {
+            throw new \RuntimeException("O valor {$valor} possui mais de {$digitos} dígitos!");
+        }
+
+        return str_pad($valor, $digitos, '0', STR_PAD_LEFT);
     }
 
 }

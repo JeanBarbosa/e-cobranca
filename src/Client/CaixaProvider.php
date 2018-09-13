@@ -280,5 +280,43 @@ class CaixaProvider
         return XMLParser::fromArray($response);
     }
 
+    public function baixa(BoletoCaixa $boleto)
+    {
+        $hashAutenticacao = $this->generatorHash(
+            $boleto->getCodigoBeneficiario(),
+            $boleto->getCnpj(),
+            $boleto->getNossoNumero(),
+            0,
+            0
+        );
+
+        $arrayDados = array(
+            'soapenv:Body' => array(
+                'manutencaocobrancabancaria:SERVICO_ENTRADA' => array(
+                    'sibar_base:HEADER' => array(
+                        'VERSAO' => $this->versao,
+                        'AUTENTICACAO' => $hashAutenticacao,
+                        //SGCBS02P - Produção | SGCBS01D - Desenvolvimento
+                        'USUARIO_SERVICO' => $boleto->isDebug() ? 'SGCBS01D' : $this->usuarioServico,
+                        'OPERACAO' => 'BAIXA_BOLETO',
+                        'SISTEMA_ORIGEM' => $this->sistemaOrigem,
+                        'UNIDADE' => $boleto->getUnidade(),
+                        'DATA_HORA' => date('YmdHis')
+                    ),
+                    'DADOS' => array(
+                        'BAIXA_BOLETO' => array(
+                            'CODIGO_BENEFICIARIO' => $boleto->getCodigoBeneficiario(),
+                            'NOSSO_NUMERO' => $boleto->getNossoNumero()
+                        )
+                    )
+                )
+            )
+        );
+
+        $response = $this->sendRequest($arrayDados, 'BAIXA_BOLETO');
+
+        return XMLParser::fromArray($response);
+    }
+
 
 }
