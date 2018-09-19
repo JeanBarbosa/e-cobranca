@@ -1,4 +1,5 @@
-# e-Cobranca
+**e-Cobranca**
+
 Cobrança registrada da Caixa Econômica Federal
 
 Webservice de acesso às operações básicas de consulta, inclusão e alteração
@@ -6,36 +7,18 @@ de cobranças registradas segundo o [manual fornecido pela CEF](docs/Manual_Leia
 Existem algumas divergências devido às frequentes modificações no serviço pela
 CEF, mas encontra-se funcional e estável na data de publicação deste código.
 
+---
+
 ## Instalação
 ### Composer
+
 Se você já conhece o **Composer** (o que é extremamente recomendado), simplesmente adicione a dependência ao seu projeto.
 
 ```
 composer require toolstore/e-cobranca
 ```
-## Consulta de títulos
 
-```
-use Caixa\BoletoCaixa;
-
-$boleto = new BoletoCaixa();
-
-$boleto->setCodigoBeneficiario('012345');
-$boleto->setCnpj('000.000.000/0000-00');
-$boleto->setNossoNumero('14000000000000000');
-
-$response = $boleto->consultarBoleto();
-
-print_r($response);
-
-```
-
-Você pode conferir se as operações do WebService estão corretas usando
-o sistema [e-Cobrança](doc/ecobranca-consulta-titulos.png) da Caixa.
-Acesse ""Banco de títulos > Consulta de títulos", deixe o formulário em
-branco e clique em "Consultar" para exibir todos os títulos.
-
-![Consulta de títulos no e-Cobrança](docs/ecobranca-consulta-titulos.png)
+---
 
 ## Inclusão de títulos
 
@@ -69,6 +52,52 @@ $response = $boleto->incluirBoleto();
 print_r($response);
 
 ```
+
+---
+
+## Consulta de títulos
+
+```
+use Caixa\BoletoCaixa;
+
+$boleto = new BoletoCaixa();
+
+$boleto->setCodigoBeneficiario('012345');
+$boleto->setCnpj('000.000.000/0000-00');
+$boleto->setNossoNumero('14000000000000000');
+
+$response = $boleto->consultarBoleto();
+
+print_r($response);
+
+```
+
+Você pode conferir se as operações do WebService estão corretas usando
+o sistema [e-Cobrança](doc/ecobranca-consulta-titulos.png) da Caixa.
+Acesse ""Banco de títulos > Consulta de títulos", deixe o formulário em
+branco e clique em "Consultar" para exibir todos os títulos.
+
+![Consulta de títulos no e-Cobrança](docs/ecobranca-consulta-titulos.png)
+
+---
+
+## Baixa de títulos
+
+```
+use Caixa\BoletoCaixa;
+
+$boleto = new BoletoCaixa();
+
+$boleto->setCodigoBeneficiario('012345');
+$boleto->setNossoNumero('14000000000000000');
+
+$response = $boleto->baixaBoleto();
+
+print_r($response);
+
+```
+
+---
 
 ## Depuração
 

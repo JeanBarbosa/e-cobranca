@@ -1,7 +1,7 @@
 {
     "name": "toolstore/e-cobranca",
     "description": "Webservice SOAP/XML para cobrança registrada da Caixa Econômica Federal (SIGCB - Sistema de gestao de cobranca bancaria)",
-    "keywords": ["caixa econômica", "SOAP", "Webservice"],
+    "keywords": ["ecobranca", "cobrança", "caixa econômica", "SOAP", "Webservice", "boletos caixa", "caixa"],
     "type": "package",
     "require": {
     },
