@@ -3,6 +3,7 @@
 namespace Caixa;
 
 use Caixa\Client\CaixaProvider;
+use Caixa\Helpers\Parser;
 
 class BoletoCaixa
 {
@@ -961,7 +962,7 @@ class BoletoCaixa
      */
     public function setNome($nome)
     {
-        $this->nome = $this->cleanString(substr($nome, 0, 40));
+        $this->nome = Parser::cleanString(substr($nome, 0, 40));
     }
 
     /**
@@ -1009,7 +1010,7 @@ class BoletoCaixa
      */
     public function setLogradouro($logradouro)
     {
-        $this->logradouro = $this->cleanString(substr($logradouro, 0, 40));
+        $this->logradouro = Parser::cleanString(substr($logradouro, 0, 40));
     }
 
     /**
@@ -1025,7 +1026,7 @@ class BoletoCaixa
      */
     public function setBairro($bairro)
     {
-        $this->bairro = $this->cleanString(substr($bairro, 0, 15));
+        $this->bairro = Parser::cleanString(substr($bairro, 0, 15));
     }
 
     /**
@@ -1041,7 +1042,7 @@ class BoletoCaixa
      */
     public function setCidade($cidade)
     {
-        $this->cidade = $this->cleanString(substr($cidade, 0, 15));
+        $this->cidade = Parser::cleanString(substr($cidade, 0, 15));
     }
 
     /**
@@ -1057,7 +1058,7 @@ class BoletoCaixa
      */
     public function setUf($uf)
     {
-        $this->uf = $this->cleanString(substr($uf, 0, 2));
+        $this->uf = Parser::cleanString(substr($uf, 0, 2));
     }
 
     /**
@@ -1300,7 +1301,7 @@ class BoletoCaixa
     public function setMensagamReciboPagador($mensagamReciboPagador)
     {
         if (count($this->mensagamReciboPagador) <= 4) {
-            $this->mensagamReciboPagador[] = $this->cleanString(substr($mensagamReciboPagador, 0, 40));
+            $this->mensagamReciboPagador[] = Parser::cleanString(substr($mensagamReciboPagador, 0, 40));
         }
     }
 
@@ -1461,25 +1462,6 @@ class BoletoCaixa
             throw new \RuntimeException($error);
         }
     }
-
-    /**
-     * Formata string de acordo com o requerido pelo webservice
-     *
-     * @see https://stackoverflow.com/a/3373364/513401
-     */
-    public function cleanString($str)
-    {
-        $replaces = array(
-            'S' => 'S', 's' => 's', 'Z' => 'Z', 'z' => 'z', 'À' => 'A', 'Á' => 'A', 'Â' => 'A', 'Ã' => 'A', 'Ä' => 'A', 'Å' => 'A', 'Æ' => 'A', 'Ç' => 'C', 'È' => 'E', 'É' => 'E',
-            'Ê' => 'E', 'Ë' => 'E', 'Ì' => 'I', 'Í' => 'I', 'Î' => 'I', 'Ï' => 'I', 'Ñ' => 'N', 'Ò' => 'O', 'Ó' => 'O', 'Ô' => 'O', 'Õ' => 'O', 'Ö' => 'O', 'Ø' => 'O', 'Ù' => 'U',
-            'Ú' => 'U', 'Û' => 'U', 'Ü' => 'U', 'Ý' => 'Y', 'Þ' => 'B', 'ß' => 'Ss', 'à' => 'a', 'á' => 'a', 'â' => 'a', 'ã' => 'a', 'ä' => 'a', 'å' => 'a', 'æ' => 'a', 'ç' => 'c',
-            'è' => 'e', 'é' => 'e', 'ê' => 'e', 'ë' => 'e', 'ì' => 'i', 'í' => 'i', 'î' => 'i', 'ï' => 'i', 'ð' => 'o', 'ñ' => 'n', 'ò' => 'o', 'ó' => 'o', 'ô' => 'o', 'õ' => 'o',
-            'ö' => 'o', 'ø' => 'o', 'ù' => 'u', 'ú' => 'u', 'û' => 'u', 'ý' => 'y', 'þ' => 'b', 'ÿ' => 'y'
-        );
-
-        return preg_replace('/[^0-9A-Za-z;,.\- ]/', '', strtoupper(strtr(trim($str), $replaces)));
-    }
-
 
     /**
      * Helper para Zerofill (0 à esqueda).

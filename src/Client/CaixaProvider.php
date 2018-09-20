@@ -3,7 +3,7 @@
 namespace Caixa\Client;
 
 use Caixa\BoletoCaixa;
-use Caixa\Helpers\XmlParser;
+use Caixa\Helpers\Parser;
 
 class CaixaProvider
 {
@@ -98,7 +98,7 @@ class CaixaProvider
 
     public function sendRequest($options, $type)
     {
-        $options = XmlParser::fromXml($options, $type);
+        $options = Parser::fromXml($options, $type);
         $path = ($type == 'CONSULTA_BOLETO') ? $this->pathWsdlConsulta: $this->pathWsdlManutencao;
 
         try {
@@ -239,7 +239,7 @@ class CaixaProvider
 
         $response = $this->sendRequest($arrayDados, 'INCLUI_BOLETO');
 
-        return XmlParser::fromArray($response);
+        return Parser::fromArray($response);
     }
 
     public function baixa(BoletoCaixa $boleto)
@@ -277,7 +277,7 @@ class CaixaProvider
 
         $response = $this->sendRequest($arrayDados, 'BAIXA_BOLETO');
 
-        return XmlParser::fromArray($response);
+        return Parser::fromArray($response);
     }
 
 
