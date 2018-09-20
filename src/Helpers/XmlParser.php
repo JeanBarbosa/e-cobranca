@@ -1,6 +1,6 @@
 <?php
 
-namespace Caixa\Helpers2;
+namespace Caixa\Helpers;
 
 class XmlParser
 {
