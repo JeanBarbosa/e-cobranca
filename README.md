@@ -23,9 +23,9 @@ composer require toolstore/e-cobranca
 ## Inclusão de títulos
 
 ```
-use Caixa\BoletoCaixa;
+use Caixa\Boleto;
 
-$boleto = new BoletoCaixa();
+$boleto = new Boleto();
 
 $boleto->setCodigoBeneficiario('012345');
 $boleto->setUnidade('0000');
@@ -58,9 +58,9 @@ print_r($response);
 ## Consulta de títulos
 
 ```
-use Caixa\BoletoCaixa;
+use Caixa\Boleto;
 
-$boleto = new BoletoCaixa();
+$boleto = new Boleto();
 
 $boleto->setCodigoBeneficiario('012345');
 $boleto->setCnpj('000.000.000/0000-00');
@@ -84,9 +84,9 @@ branco e clique em "Consultar" para exibir todos os títulos.
 ## Baixa de títulos
 
 ```
-use Caixa\BoletoCaixa;
+use Caixa\Boleto;
 
-$boleto = new BoletoCaixa();
+$boleto = new Boleto();
 
 $boleto->setCodigoBeneficiario('012345');
 $boleto->setNossoNumero('14000000000000000');
@@ -107,9 +107,9 @@ ser verificados ao setar a variável `debug` para `true`.
 //SGCBS02P - Produção | SGCBS01D - Desenvolvimento
 
 ```
-use Caixa\BoletoCaixa;
+use Caixa\Boleto;
 
-$boleto = new BoletoCaixa();
+$boleto = new Boleto();
 $boleto->setDebug(true);
 
 //set fields
