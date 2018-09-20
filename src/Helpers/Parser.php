@@ -44,7 +44,7 @@ class Parser
 
         return $xml->saveXML();
     }
-    
+
     public static function fromArray($xmlString)
     {
         $p = xml_parser_create();
@@ -59,10 +59,8 @@ class Parser
     {
         $nodes = [];
 
-        foreach ($values as $key => $value)
-        {
-            if (isset($value['value']))
-            {
+        foreach ($values as $key => $value) {
+            if (isset($value['value'])) {
                 $nodes[$value['tag']] = $value['value'];
             }
         }
@@ -86,6 +84,24 @@ class Parser
         );
 
         return preg_replace('/[^0-9A-Za-z;,.\- ]/', '', strtoupper(strtr(trim($str), $replaces)));
+    }
+
+    /**
+     * Helper para Zerofill (0 à esqueda).
+     * O valor não deve ter mais caracteres do que o número de dígitos especificados
+     *
+     * @param int $valor
+     * @param int $digitos
+     * @return string
+     * @throws Exception
+     */
+    public static function zeroFill($valor, $digitos)
+    {
+        if (strlen($valor) > $digitos) {
+            throw new \RuntimeException("O valor {$valor} possui mais de {$digitos} dígitos!");
+        }
+
+        return str_pad($valor, $digitos, '0', STR_PAD_LEFT);
     }
 
 }

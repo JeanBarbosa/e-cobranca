@@ -2,7 +2,7 @@
 
 namespace Caixa\Client;
 
-use Caixa\BoletoCaixa;
+use Caixa\Boleto;
 use Caixa\Helpers\Parser;
 
 class CaixaProvider
@@ -128,7 +128,7 @@ class CaixaProvider
     }
 
 
-    public function consulta(BoletoCaixa $boleto)
+    public function consulta(Boleto $boleto)
     {
         $hashAutenticacao = $this->generatorHash(
             $boleto->getCodigoBeneficiario(),
@@ -165,7 +165,7 @@ class CaixaProvider
 
     }
 
-    public function incluir(BoletoCaixa $boleto)
+    public function incluir(Boleto $boleto)
     {
         $hashAutenticacao = $this->generatorHash(
             $boleto->getCodigoBeneficiario(),
@@ -242,7 +242,7 @@ class CaixaProvider
         return Parser::fromArray($response);
     }
 
-    public function baixa(BoletoCaixa $boleto)
+    public function baixa(Boleto $boleto)
     {
         $hashAutenticacao = $this->generatorHash(
             $boleto->getCodigoBeneficiario(),

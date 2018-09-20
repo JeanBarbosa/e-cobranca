@@ -5,7 +5,7 @@ namespace Caixa;
 use Caixa\Client\CaixaProvider;
 use Caixa\Helpers\Parser;
 
-class BoletoCaixa
+class Boleto
 {
     protected $banco = 'caixa';
 
@@ -700,7 +700,7 @@ class BoletoCaixa
 
         } elseif ((strpos($nossoNumero, '14') === false) || (strlen($nossoNumero) <> 17)) {
 
-            $this->nossoNumero = '14' . $this->zeroFill($nossoNumero, '15');
+            $this->nossoNumero = '14' . Parser::zeroFill($nossoNumero, '15');
 
         } else {
 
@@ -1461,24 +1461,6 @@ class BoletoCaixa
         if (!empty($this->errors)) {
             throw new \RuntimeException($error);
         }
-    }
-
-    /**
-     * Helper para Zerofill (0 à esqueda).
-     * O valor não deve ter mais caracteres do que o número de dígitos especificados
-     *
-     * @param int $valor
-     * @param int $digitos
-     * @return string
-     * @throws Exception
-     */
-    public function zeroFill($valor, $digitos)
-    {
-        if (strlen($valor) > $digitos) {
-            throw new \RuntimeException("O valor {$valor} possui mais de {$digitos} dígitos!");
-        }
-
-        return str_pad($valor, $digitos, '0', STR_PAD_LEFT);
     }
 
 }
