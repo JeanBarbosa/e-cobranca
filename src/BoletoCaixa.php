@@ -697,7 +697,7 @@ class BoletoCaixa
             //Necessário para gerar o hash corretamente
             $this->nossoNumero = '00000000000000000';
 
-        } elseif ((strpos($nossoNumero, '14') === false) && (strlen($nossoNumero) <> 17)) {
+        } elseif ((strpos($nossoNumero, '14') === false) || (strlen($nossoNumero) <> 17)) {
 
             $this->nossoNumero = '14' . $this->zeroFill($nossoNumero, '15');
 
