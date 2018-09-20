@@ -1,8 +1,8 @@
 <?php
 
-namespace Caixa\Helpers;
+namespace Caixa\Helpers2;
 
-class XMLParser
+class XmlParser
 {
     /**
      * Recebe o array de dados e faz a geração do XML conforme layout da CAIXA

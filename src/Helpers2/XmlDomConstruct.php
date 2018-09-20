@@ -1,6 +1,6 @@
 <?php
 
-namespace Caixa\Helpers;
+namespace Caixa\Helpers2;
 
 /**
  * User: Thiago Edson

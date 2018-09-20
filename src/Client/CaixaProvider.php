@@ -3,7 +3,7 @@
 namespace Caixa\Client;
 
 use Caixa\BoletoCaixa;
-use Caixa\Helpers\XmlParser;
+use Caixa\Helpers2\XmlParser;
 
 class CaixaProvider
 {
