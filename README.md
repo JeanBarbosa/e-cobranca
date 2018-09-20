@@ -15,7 +15,7 @@ CEF, mas encontra-se funcional e estável na data de publicação deste código.
 Se você já conhece o **Composer** (o que é extremamente recomendado), simplesmente adicione a dependência ao seu projeto.
 
 ```
-composer require toolstore/e-cobranca
+composer require toolstore/e-cobranca @dev
 ```
 
 ---
