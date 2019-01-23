@@ -52,7 +52,56 @@ $response = $boleto->incluirBoleto();
 print_r($response);
 
 ```
+---
 
+## Alteração de títulos
+Resaltando que alguns campos não é possível ser alterados...
+
+```
+use Caixa\Boleto;
+
+$boleto = new Boleto();
+
+$boleto->setCodigoBeneficiario('012345');
+$boleto->setUnidade('0000');
+$boleto->setIdProcesso('012345');
+$boleto->setCnpj('000.000.000/0000-00');
+$boleto->setNossoNumero('14000000000000000');
+$boleto->setNumeroDocumento('TEST0001');
+$boleto->setDataVencimento('2019-09-30');  //alterando data de vencimento
+$boleto->setValor('1.0');
+$boleto->setTipoEspecie('02');
+$boleto->setFlagAceite('N');
+$boleto->setValorAbatimento('0');
+$boleto->setNumeroDias('30');
+$boleto->setNome('Jean Barbosa dos Santos');
+$boleto->setLogradouro('E. Paranhos, Nº 00');
+$boleto->setCidade('Brasilia');
+$boleto->setUf('DF');
+$boleto->setCep('00.000-000');
+
+$response = $boleto->alterarBoleto();
+
+print_r($response);
+
+```
+---
+
+## Baixa de títulos
+
+```
+use Caixa\Boleto;
+
+$boleto = new Boleto();
+
+$boleto->setCodigoBeneficiario('012345');
+$boleto->setNossoNumero('14000000000000000');
+
+$response = $boleto->baixaBoleto();
+
+print_r($response);
+
+```
 ---
 
 ## Consulta de títulos
@@ -78,24 +127,6 @@ Acesse ""Banco de títulos > Consulta de títulos", deixe o formulário em
 branco e clique em "Consultar" para exibir todos os títulos.
 
 ![Consulta de títulos no e-Cobrança](docs/ecobranca-consulta-titulos.png)
-
----
-
-## Baixa de títulos
-
-```
-use Caixa\Boleto;
-
-$boleto = new Boleto();
-
-$boleto->setCodigoBeneficiario('012345');
-$boleto->setNossoNumero('14000000000000000');
-
-$response = $boleto->baixaBoleto();
-
-print_r($response);
-
-```
 
 ---
 

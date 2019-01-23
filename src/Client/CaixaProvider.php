@@ -242,6 +242,80 @@ class CaixaProvider
         return Parser::fromArray($response);
     }
 
+    public function alterar(Boleto $boleto)
+    {
+        $hashAutenticacao = $this->generatorHash(
+            $boleto->getCodigoBeneficiario(),
+            $boleto->getCnpj(),
+            $boleto->getNossoNumero(),
+            $boleto->getDataVencimento(),
+            $boleto->getValor()
+        );
+
+        $arrayDados = array(
+            'soapenv:Body' => array(
+                'manutencaocobrancabancaria:SERVICO_ENTRADA' => array(
+                    'sibar_base:HEADER' => array(
+                        'VERSAO' => $this->versao,
+                        'AUTENTICACAO' => $hashAutenticacao,
+                        //SGCBS02P - Produção | SGCBS01D - Desenvolvimento
+                        'USUARIO_SERVICO' => $boleto->isDebug() ? 'SGCBS01D' : $this->usuarioServico,
+                        'OPERACAO' => 'ALTERA_BOLETO',
+                        'SISTEMA_ORIGEM' => $this->sistemaOrigem,
+                        'UNIDADE' => $boleto->getUnidade(),
+                        'DATA_HORA' => date('YmdHis')
+                    ),
+                    'DADOS' => array(
+                        'ALTERA_BOLETO' => array(
+                            'CODIGO_BENEFICIARIO' => $boleto->getCodigoBeneficiario(),
+                            'TITULO' => array(
+                                'NOSSO_NUMERO' => $boleto->getNossoNumero(),
+                                'NUMERO_DOCUMENTO' => $boleto->getNumeroDocumento(),
+                                //código interdo do boleto/título
+                                'DATA_VENCIMENTO' => $boleto->getDataVencimento(),
+                                'VALOR' => $boleto->getValor(),
+                                'TIPO_ESPECIE' => $boleto->getTipoEspecie(),
+                                // Olhar no manual qual enviar
+                                'FLAG_ACEITE' => $boleto->getFlagAceite(),
+                                // S-Aceite | N-Não aceite (reconhecimento de dívida pelo pagador)
+                                'JUROS_MORA' => array(
+                                    'TIPO' => $boleto->getTipo(),
+                                    //'DATA' => $informacoes['dataJuros'],
+                                    'PERCENTUAL' => $boleto->getJurosValor(),
+                                ),
+                                'VALOR_ABATIMENTO' => $boleto->getValorAbatimento(),
+                                'POS_VENCIMENTO' => array(
+                                    'ACAO' => $boleto->getAcao(),
+                                    'NUMERO_DIAS' => $boleto->getNumeroDias(),
+                                ),
+                                //Real
+                                'PAGADOR' => array(
+                                    'NOME' => $boleto->getNome(),
+                                    'ENDERECO' => array(
+                                        'LOGRADOURO' => $boleto->getLogradouro(),
+                                        'BAIRRO' => $boleto->getBairro(),
+                                        'CIDADE' => $boleto->getCidade(),
+                                        'UF' => $boleto->getUf(),
+                                        'CEP' => $boleto->getCep()
+                                    ),
+                                ),
+                                'FICHA_COMPENSACAO' => array(
+                                    'MENSAGENS' => array(
+                                        'MENSAGEM' => implode(',', $boleto->getMensagemFichaCompesacao()),
+                                    )
+                                )
+                            )
+                        )
+                    )
+                )
+            )
+        );
+
+        $response = $this->sendRequest($arrayDados, 'ALTERA_BOLETO');
+
+        return Parser::fromArray($response);
+    }
+
     public function baixa(Boleto $boleto)
     {
         $hashAutenticacao = $this->generatorHash(
