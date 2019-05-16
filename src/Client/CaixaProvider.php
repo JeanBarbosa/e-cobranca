@@ -161,8 +161,9 @@ class CaixaProvider
             )
         );
 
-        return $this->sendRequest($arrayData, 'CONSULTA_BOLETO');
+        $response = $this->sendRequest($arrayData, 'CONSULTA_BOLETO');
 
+        return Parser::fromArray($response);
     }
 
     public function incluir(Boleto $boleto)

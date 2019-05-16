@@ -86,11 +86,14 @@ class Boleto
      *
      * 01 CH Cheque
      * 02 DM Duplicata Mercantil
-     * 03 DMI Duplicata Mercantil p/ Indicação 04 DS Duplicata de Serviço
-     * 05 DSI Duplicata de Serviço p/ Indicação 06 DR Duplicata Rural
+     * 03 DMI Duplicata Mercantil p/ Indicação
+     * 04 DS Duplicata de Serviço
+     * 05 DSI Duplicata de Serviço p/ Indicação
+     * 06 DR Duplicata Rural
      * 07 LC Letra de Câmbio
      * 08 NCC Nota de Crédito Comercial
-     * 09 NCE Nota de Crédito à Exportação 10 NCI Nota de Crédito Industrial
+     * 09 NCE Nota de Crédito à Exportação
+     * 10 NCI Nota de Crédito Industrial
      * 11 NCR Nota de Crédito Rural
      * 12 NP Nota Promissória
      * 13 NPR Nota Promissória Rural
@@ -783,6 +786,39 @@ class Boleto
      */
     public function setTipoEspecie($tipoEspecie)
     {
+
+        //TODO usar o array para os tios de especie
+        // Códigos adotado para identificar os tipos de título de cobrança
+        $tipos = [
+            'CH' => '01', // Cheque
+            'DM' => '02', // Duplicata Mercantil
+            'DMI' => '03',// Duplicata Mercantil p/ Indicação
+            'DS' => '04', // Duplicata de Serviço
+            'DSI' => '05',// Duplicata de Serviço p/ Indicação
+            'DR' => '06', // Duplicata Rural
+            'LC' => '07', // Letra de Câmbio
+            'NCC' => '08',// Nota de Crédito Comercial
+            'NCE' => '09',// Nota de Crédito à Exportação 10 NCI Nota de Crédito Industrial
+            'NCR' => '11',// Nota de Crédito Rural
+            'NP' => '12', // Nota Promissória
+            'NPR' => '13',// Nota Promissória Rural
+            'TM' => '14', // Triplicata Mercantil
+            'TS' => '15', // Triplicata de Serviço
+            'NS' => '16', // Nota de Seguro
+            'RC' => '17', // Recibo
+            'FAT'=> '18', // Fatura
+            'ND' => '19', // Nota de Débito
+            'AP' => '20', // Apólice de Seguro
+            'ME' => '21', // Mensalidade Escolar
+            'PC' => '22', // Parcela de Consórcio
+            'NF' => '23', // Nota Fiscal
+            'DD' => '24', // Documento de Dívida
+            'CPR' => '25',// Cédula de Produto Rural
+            'CC' => '31', // Cartão de Crédito
+            'BP' => '32', // Boleto de Proposta
+            'OU' => '99', // Outros
+        ];
+
         $this->tipoEspecie = $tipoEspecie;
     }
 
@@ -1023,6 +1059,10 @@ class Boleto
      */
     public function setLogradouro($logradouro)
     {
+        if (empty($logradouro)) {
+            $logradouro = "endereço não informado";
+        }
+
         $this->logradouro = Parser::cleanString(substr($logradouro, 0, 40));
     }
 
@@ -1087,6 +1127,10 @@ class Boleto
      */
     public function setCep($cep)
     {
+        if (empty($cep)) {
+            $cep = '00000-000';
+        }
+
         $this->cep = preg_replace('/\D/', '', $cep);
     }
 
