@@ -137,7 +137,7 @@ ser verificados ao setar a variável `debug` para `true`.
 
 //SGCBS02P - Produção | SGCBS01D - Desenvolvimento
 
-#####(obs: O webservice da caixa não funciona como esperado no modo de desenvolvimento. Aconselho usar uma conta de produção para teste)
+** (obs: O webservice da caixa não funciona como esperado no modo de desenvolvimento. Aconselho usar uma conta de produção para teste) **
 
 ```
 use Caixa\Boleto;
