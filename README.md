@@ -122,7 +122,7 @@ print_r($response);
 ```
 
 Você pode conferir se as operações do WebService estão corretas usando
-o sistema [e-Cobrança](doc/ecobranca-consulta-titulos.png) da Caixa.
+o sistema [e-Cobrança](https://ecobranca.caixa.gov.br) da Caixa.
 Acesse ""Banco de títulos > Consulta de títulos", deixe o formulário em
 branco e clique em "Consultar" para exibir todos os títulos.
 
@@ -136,6 +136,8 @@ Todas as tentativas de transação com o WebService e seus conteúdos podem
 ser verificados ao setar a variável `debug` para `true`.
 
 //SGCBS02P - Produção | SGCBS01D - Desenvolvimento
+
+#####(obs: O webservice da caixa não funciona como esperado no modo de desenvolvimento. Aconselho usar uma conta de produção para teste)
 
 ```
 use Caixa\Boleto;
