@@ -1,5 +1,5 @@
 {
-    "name": "JeanBarbosa/e-cobranca",
+    "name": "jeanbarbosa/e-cobranca",
     "description": "Webservice SOAP/XML para cobrança registrada da Caixa Econômica Federal (SIGCB - Sistema de gestao de cobranca bancaria)",
     "keywords": ["ecobranca", "cobrança", "caixa econômica", "SOAP", "Webservice", "boletos caixa", "caixa"],
     "type": "package",
